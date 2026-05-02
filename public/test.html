@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Inject Donation</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; }
+    input, button { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; font-size: 16px; }
+    button { background: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px; }
+    button:hover { background: #45a049; }
+    #result { margin-top: 20px; padding: 15px; background: #f4f4f4; border-radius: 5px; display: none; }
+  </style>
+</head>
+<body>
+  <h2>🧪 Test Inject Donation</h2>
+  <input type="text" id="name" placeholder="Nama donatur" value="TestUser" />
+  <input type="number" id="amount" placeholder="Amount (IDR)" value="10000" />
+  <input type="text" id="message" placeholder="Pesan" value="Test donasi" />
+  <button onclick="sendTest()">Kirim Test Donasi</button>
+  <div id="result"></div>
+
+  <script>
+    async function sendTest() {
+      const name    = document.getElementById('name').value;
+      const amount  = document.getElementById('amount').value;
+      const message = document.getElementById('message').value;
+      const result  = document.getElementById('result');
+
+      result.style.display = 'block';
+      result.innerHTML = '⏳ Mengirim...';
+
+      try {
+        const res = await fetch('/api/test/inject', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, amount: parseInt(amount), message })
+        });
+        const data = await res.json();
+        result.innerHTML = '✅ Berhasil!<br><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+      } catch (err) {
+        result.innerHTML = '❌ Error: ' + err.message;
+      }
+    }
+  </script>
+</body>
+</html>

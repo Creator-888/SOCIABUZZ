@@ -1,0 +1,8 @@
+{
+  "name": "sociabuzz-roblox",
+  "version": "1.0.0",
+  "main": "api/index.js",
+  "engines": {
+    "node": "18.x"
+  }
+}
